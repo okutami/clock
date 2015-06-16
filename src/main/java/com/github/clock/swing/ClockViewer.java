@@ -18,6 +18,9 @@ import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+//変更点
+import com.github.clock.Args;
+//
 import com.github.clock.Clock;
 import com.github.clock.UpdateObserver;
 
@@ -25,10 +28,13 @@ public class ClockViewer extends JComponent{
     private static final long serialVersionUID = 851223340594030326L;
 
     private Clock clock;
+    private Args args;
     private Image background;
     private boolean debugMode = false;
+    private 
 
-    public ClockViewer(Clock clock){
+    public ClockViewer(Clock clock, Args args){
+        this.args = args;
         clock.addUpdateObserver(new UpdateObserver(){
             @Override
             public void update(Clock clock) {
@@ -117,7 +123,8 @@ public class ClockViewer extends JComponent{
         drawHand(g2, clock.getSecond(), length * 0.8);
 
         g2.setStroke(new BasicStroke(2));
-        g2.setColor(Color.RED);
+        //g2.setColor(Color.RED);
+        g2.setColor(Color.decode(args.getLongHandColor()));
         drawHand(g2, clock.getMinute(), length * 0.7);
         // 長針の位置は，分の位置で表そうとすると，時間×5．
         // 24時間制のため，12で割った余りを時間とする．
